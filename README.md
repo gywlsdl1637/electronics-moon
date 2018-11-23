@@ -1,3 +1,3 @@
 # electronics-moon
 
-Go to 'Java' or 'numerical_analysis'
+Go to 'Java' or 'numerical_analysis' branch
