@@ -21,24 +21,32 @@
      cf) zero vector : 벡터 성분이 모두 _zero_ 인 vector
      - Example에서 구한 eigen value값이 7인 경우에 대한 eigenvector 
        ([M]-b[I]){x} = 0에서 
+       
         ![image](https://user-images.githubusercontent.com/44759154/48930981-408ca900-ef37-11e8-9b25-8210c4477684.png)
+        
       즉, x1 = x2이므로 구하고자 하는 eigenvector 
-         ![image](https://user-images.githubusercontent.com/44759154/48931033-98c3ab00-ef37-11e8-9335-161dd1f8d09b.png)
+      
+        ![image](https://user-images.githubusercontent.com/44759154/48931033-98c3ab00-ef37-11e8-9335-161dd1f8d09b.png)
     
-    - **Symmetric matrix** : transpose(행과 열 성분을 바꿈)한 것과 동일한 square matrix
+   - **Symmetric matrix** : transpose(행과 열 성분을 바꿈)한 것과 동일한 square matrix
                              즉, 대각선을 기준으로 성분값이 동일한 matrix
+                             
         ![image](https://user-images.githubusercontent.com/44759154/48932029-d414a880-ef3c-11e8-9fc6-b5d688674670.png)
 
-    - **Square matrix** : row와 column의 수가 같은 matrix
+   - **Square matrix** : row와 column의 수가 같은 matrix
 ___
 # Advanced
 ## Power method : 가장 큰 eigenvalue와 그에 따른 eigenvector를 찾는 반복법
 (가장 작은 eigenvalue를 구할 땐 M의 역행렬을 power method에 적용하면 가장 큰 eigenvalue 1/b를 찾으므로 
 가장 작은 eigenvalue **b**를 구할 수 있다.) 
+
   - 방법 :
-    1) 초기벡터를 설정(주로 벡터의 성분이 모두 1인 column vector 이용)하여 행렬 M가 곱해준다. 
+    1) 초기벡터를 설정(주로 벡터의 성분이 모두 1인 column vector 이용)하여 행렬 M가 곱해준다.  
+    
       cf) 초기벡터
-      ![image](https://user-images.githubusercontent.com/44759154/48931354-35d31380-ef39-11e8-965c-07fb11b7159c.png)
+      
+      ![image](https://user-images.githubusercontent.com/44759154/48931354-35d31380-ef39-11e8-965c-07fb11b7159c.png)  
+      
     2) 그에 따른 eigenvalue와 eigenvector가 구해준다.
     3) 구한 eigenvector를 다시 행렬 M가 곱해준다.
     4) 위의 과정을 반복하다보면 eigenvalue값이 가장 큰 eigenvalue에 수렴하게 되고, 그에 따라 eigenvector도
@@ -53,12 +61,31 @@ ___
     (아닌 경우에는 error를 이용해 square and symmetric인 matrix를 넣어달라고 출력해준다.)
 2. 확인이 끝나면, 사용자로부터 가장 큰 eigenvalue를 찾을지 가장 작은 eigenvalue를 찾을지에 대해 입력값으로 설정을 받도록 해준다.
     (가장 큰 eigenvalue는 1, 가장 작은 eigenvalue는 2를 입력. 이외의 입력에 대해서는 error로 출력)
+3. 허용오차(es)와 최대반복횟수(maxit)을 설정하여, 허용오차보다 근사 상대오차가 작거나 반복횟수를 초과한 경우 반복문을 빠져나오도록 설정해준다.
 
 ___
 
 # Code Explanation
+  - Symmetric 확인하는 구문  
   
-  
+    1) 내장함수 사용
+    
+    >issymmetric()  
+    
+     - 반환값이 1인 경우 symmetric  
+     
+    
+    2) for문을 이용
+    
+    ![image](https://user-images.githubusercontent.com/44759154/48932647-5a7eb980-ef40-11e8-8aab-dbcaa229cc8d.png)
+    
+    count 변수를 설정하여, 행렬 성분의 값을 비교하면서 symmetric임을 판단한다.
+    
+  - power_method() : 가장 큰 eigenvalue를 구하고, eigenvector를 찾는 power method를 구현한 함수
+    - 절대값이 가장 큰 eigenvalue를 구하는 것이므로 abs()를 이용해 절대값이 가장 큰 값을 먼저 찾은 다음, 행렬에서 부호가 같거나 다른 값을 가지는       성분을 찾아야한다. 이 과정을 하지 않는 경우, eigenvector와 eigenvalue의 부호가 원래 결과와 다르게 나올 수 있다.
+ 
+      >if(result(k,1) == (-1)*maxval | result(k,1) == maxval) 
+      
   
 ___
 
