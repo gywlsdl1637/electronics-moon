@@ -1,66 +1,55 @@
 function [eig_val, eig_vec] =  find_eigen(A, es, maxit)
- %Çà·Ä A°¡ squareÀÎÁö È®ÀÎÇÏ´Â ±¸¹®
+ %í–‰ë ¬ Aê°€ squareì¸ì§€ í™•ì¸í•˜ëŠ” êµ¬ë¬¸
 [r, c] = size(A); 
 if r == c, fprintf('Square matrix\n');
 else 
-    error('NOT Square matrix. Please enter Square matrix'); % square matrix°¡ ¾Æ´Ï¸é error¸¦ ¶ç¿ì°í Á¾·á
+    error('NOT Square matrix. Please enter Square matrix'); % square matrixê°€ ì•„ë‹ˆë©´ errorë¥¼ ë„ìš°ê³  ì¢…ë£Œ
 end
 
-%³»ÀåÇÔ¼ö issymmetricÀ» ÀÌ¿ëÇÏ¿© Çà·Ä A°¡ ´ëÄªÇà·ÄÀÎÁö È®ÀÎÇÏ´Â ±¸¹®
-%if issymmetric(A) == 1, fprintf('Symmetric matrix\n');
-
-%³»ÀåÇÔ¼ö »ç¿ëÇÏÁö ¾Ê°í ´ëÄªÀÎÁö È®ÀÎÇÏ´Â ±¸¹®
-count = 0;
-for i = 1 : r
-    for j = 1 : c
-        if A(i,j) == A(j,i), count = count +1;
-        end
-    end
-end
-
-if count == r*c, fprintf('Symmetric matrix\n'); 
+%ë‚´ì¥í•¨ìˆ˜ issymmetricì„ ì´ìš©í•˜ì—¬ í–‰ë ¬ Aê°€ ëŒ€ì¹­í–‰ë ¬ì¸ì§€ í™•ì¸í•˜ëŠ” êµ¬ë¬¸
+if issymmetric(A) == 1, fprintf('Symmetric matrix\n'); 
 else error('NOT Symmetric matrix. Please enter Symmetric matrix'); 
 end
 
-%±â´É ¼±ÅÃ ±¸¹®
-fprintf('¿øÇÏ´Â ±â´ÉÀ» ¼±ÅÃÇÏ¼¼¿ä. °¡Àå Å« eigenvalue(1) or °¡Àå ÀÛÀº eigenvalue(2)\n');
-n = input('¼±ÅÃ : ');
+%ê¸°ëŠ¥ ì„ íƒ êµ¬ë¬¸
+fprintf('ì›í•˜ëŠ” ê¸°ëŠ¥ì„ ì„ íƒí•˜ì„¸ìš”. ê°€ì¥ í° eigenvalue(1) or ê°€ì¥ ì‘ì€ eigenvalue(2)\n');
+n = input('ì„ íƒ : ');
 
 if n == 1, [eig_val, eig_vec] = power_method(A,es,maxit);    
 elseif n == 2
-    X = inv(A); %°¡Àå ÀÛÀº eigenvalue¸¦ Ã£À» ¶§´Â inverseÇà·ÄÀ» power methodÇØÁà¾ßÇÔ
+    X = inv(A); %ê°€ì¥ ì‘ì€ eigenvalueë¥¼ ì°¾ì„ ë•ŒëŠ” inverseí–‰ë ¬ì„ power methodí•´ì¤˜ì•¼í•¨
     [val ,eig_vec] = power_method(X, es, maxit);
     eig_val = 1/val; 
-else error('1 ¶Ç´Â 2¸¸ ÀÔ·ÂÇÏ¼¼¿ä.\n');
+else error('1 ë˜ëŠ” 2ë§Œ ì…ë ¥í•˜ì„¸ìš”.\n');
 end
 
 end
 
-%°¡Àå Å« eigenvalue¸¦ ±¸ÇÏ°í, eigenvector¸¦ Ã£´Â ÇÔ¼ö
+%ê°€ì¥ í° eigenvalueë¥¼ êµ¬í•˜ê³ , eigenvectorë¥¼ ì°¾ëŠ” í•¨ìˆ˜
 function [val,vec] = power_method(A,es,maxit)
-r = length(A(:,1)); %ÃÊ±â º¤ÅÍ »ı¼ºÀ» À§ÇÑ Çà·ÄAÀÇ Çà ±æÀÌ º¯¼ö »ı¼º
-initvec = ones(r,1); % ÃÊ±â º¤ÅÍ ÁöÁ¤
+r = length(A(:,1)); %ì´ˆê¸° ë²¡í„° ìƒì„±ì„ ìœ„í•œ í–‰ë ¬Aì˜ í–‰ ê¸¸ì´ ë³€ìˆ˜ ìƒì„±
+initvec = ones(r,1); % ì´ˆê¸° ë²¡í„° ì§€ì •
 val = 0;
-iter = 0;%¹İº¹È½¼ö ÀúÀå º¯¼ö
-ea = 100; %±Ù»ç»ó´ë¿ÀÂ÷ ÃÊ±â°ª ÁöÁ¤
+iter = 0;%ë°˜ë³µíšŸìˆ˜ ì €ì¥ ë³€ìˆ˜
+ea = 100; %ê·¼ì‚¬ìƒëŒ€ì˜¤ì°¨ ì´ˆê¸°ê°’ ì§€ì •
 
     while(1)
             oldval = val;
             result = A * initvec;
             maxval = max(abs(result));
             for k = 1 : length(result)
-                %Àı´ë°ªÀÎ Å« °Ô À½¼öÀÎÁö ¾ç¼öÀÎÁö ÆÇ´ÜÇÏ¿© ±×¿¡ ¸Â°Ô eigenvalue·Î ÀúÀåÇÏ±â À§ÇÑ if¹®
+                %ì ˆëŒ€ê°’ì¸ í° ê²Œ ìŒìˆ˜ì¸ì§€ ì–‘ìˆ˜ì¸ì§€ íŒë‹¨í•˜ì—¬ ê·¸ì— ë§ê²Œ eigenvalueë¡œ ì €ì¥í•˜ê¸° ìœ„í•œ ifë¬¸
                 if (result(k,1) == (-1)*maxval) | (result(k,1) == maxval), finalmax = result(k,1);
                 end
             end
 
-            val = finalmax; %Àı´ë°ªÀÌ °¡Àå Å« eigenvalue¸¦ ÃÖÁ¾°ª(val)¿¡ ´ëÀÔ
+            val = finalmax; %ì ˆëŒ€ê°’ì´ ê°€ì¥ í° eigenvalueë¥¼ ìµœì¢…ê°’(val)ì— ëŒ€ì…
             vec = result/finalmax ;
             initvec = vec;
             
             iter = iter+1;
-            if iter>=2, ea = abs((val-oldval)/val) * 100; end %µÎ¹øÂ° iterationºÎÅÍ ±Ù»ç»ó´ë¿ÀÂ÷ °è»ê
-            if ea <= es | iter >= maxit, break, end %¹İº¹È½¼ö ÃÊ°ú ¹× Çã¿ë¿ÀÂ÷ ¸¸Á· ÆÇ´Ü 
+            if iter>=2, ea = abs((val-oldval)/val) * 100; end %ë‘ë²ˆì§¸ iterationë¶€í„° ê·¼ì‚¬ìƒëŒ€ì˜¤ì°¨ ê³„ì‚°
+            if ea <= es | iter >= maxit, break, end %ë°˜ë³µíšŸìˆ˜ ì´ˆê³¼ ë° í—ˆìš©ì˜¤ì°¨ ë§Œì¡± íŒë‹¨ 
     end
 end
 
