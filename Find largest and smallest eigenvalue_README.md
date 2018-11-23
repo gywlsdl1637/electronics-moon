@@ -3,16 +3,23 @@
 ## Concept
    - **Eigenvalue** : 어떤 벡터 {x}에 대해 [M]{x} = b{x} 을 만족한다고 가정하였을 때, **b**를 행렬 M에 대한   _eigenvalue_ 라 한다. 
      cf) **b** 구하는 법 : _det([M]-b[I])=0_ 을 만족하는 b를 구한다.
-     - det() : 행렬의 determinant 
-     - I : 단위행렬(identiy matrix), 주 대각선의 원소가 모두 1이며 나머지 원소는 모두 0이다.
-           ![image](https://user-images.githubusercontent.com/44759154/48930529-77ad8b00-ef34-11e8-95c5-d4ef90a7a579.png)
+     - det() : 행렬의 determinant  
+     
+     - I : 단위행렬(identiy matrix), 주 대각선의 원소가 모두 1이며 나머지 원소는 모두 0이다.  
+     
+       ![image](https://user-images.githubusercontent.com/44759154/48930529-77ad8b00-ef34-11e8-95c5-d4ef90a7a579.png)
 
-     - Example) 
+     - Example)  
+     
        ![image](https://user-images.githubusercontent.com/44759154/48930626-2a7de900-ef35-11e8-99db-031043334d90.png)
-       - [M]-b[I] :
-    ![image](https://user-images.githubusercontent.com/44759154/48930597-f0ace280-ef34-11e8-8a34-4202f957bd76.png)  
+      
+      - [M]-b[I] :
+    
+        ![image](https://user-images.githubusercontent.com/44759154/48930597-f0ace280-ef34-11e8-8a34-4202f957bd76.png)  
+       
        - det([M]-b[I])
-       ![image](https://user-images.githubusercontent.com/44759154/48930717-b4c64d00-ef35-11e8-8cd7-e3731e9e61c9.png)  
+       
+        ![image](https://user-images.githubusercontent.com/44759154/48930717-b4c64d00-ef35-11e8-8cd7-e3731e9e61c9.png)  
        
        따라서, eigenvalue는 -1과 7이다.
     
